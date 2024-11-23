@@ -1,5 +1,7 @@
 #pragma once
 
+#include "D2D_Application.h"
+
 class GE_Application
 {
 public:
@@ -11,11 +13,13 @@ public:
 	const std::string& GetArgument(int anArgumentIndex) const;
 
 protected:
+	virtual void Init();
 	virtual void Update();
 
 private:
 	std::string myApplicationName;
 	std::vector<std::string> myArguments;
+	D2D_Application myD2DApplication;
 
 	// Renderer Backend (modular, DX12, Vulkan, etc.?)
 	// Settings Manager

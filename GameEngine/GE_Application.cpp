@@ -5,6 +5,7 @@
 GE_Application::GE_Application(const std::string& anApplicationName, const std::vector<std::string>& someArguments)
 	: myApplicationName(anApplicationName)
 	, myArguments(someArguments)
+	, myD2DApplication(anApplicationName, anApplicationName, std::array<int, 2> { 640, 480 })
 {
 }
 
@@ -20,6 +21,13 @@ const std::string& GE_Application::GetArgument(int anArgumentIndex) const
 }
 
 //--------------------------------------------------------------------------------
+void GE_Application::Init()
+{
+	myD2DApplication.Initialize();
+}
+
+//--------------------------------------------------------------------------------
 void GE_Application::Update()
 {
+	myD2DApplication.Update();
 }

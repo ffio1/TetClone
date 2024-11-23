@@ -16,6 +16,8 @@ TetClient_Application::TetClient_Application(const std::vector<std::string>& som
 //--------------------------------------------------------------------------------
 void TetClient_Application::Init()
 {
+	GE_Application::Init();
+
 	GE_LOG_DEBUG("This is a test DEBUG message! %s", "Test1");
 	GE_LOG_INFO("This is a test INFO message! %d", 2);
 	GE_LOG_WARNING("This is a test WARNING message! %f", 3.25f);

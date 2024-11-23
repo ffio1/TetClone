@@ -8,8 +8,10 @@ public:
 
 	void Update() override;
 
+protected:
+	void Init() override;
+
 private:
-	void Init();
 
 	// Block manager
 	// Etc
