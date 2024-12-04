@@ -1,9 +1,11 @@
 #pragma once
 
+#include "Core_Vector.h"
+
 class D2D_Application
 {
 public:
-	D2D_Application(const std::string& anApplicationName, const std::string& aWindowDescription, const std::array<int, 2>& aWindowSize);
+	D2D_Application(const std::string& anApplicationName, const std::string& aWindowDescription, const Core_Vector2i& aWindowSize);
 	~D2D_Application();
 
 public:
@@ -39,5 +41,5 @@ private:
 
 	std::string myApplicationName;
 	std::string myWindowDescription;
-	std::array<int, 2> myWindowSize;
+	Core_Vector2i myWindowSize;
 };

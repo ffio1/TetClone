@@ -11,6 +11,10 @@
 
 // External dependency includes
 
+// Lower-level libaries
+#include "Core_Math.h"
+#include "Core_Vector.h"
+
 // Engine Includes
 #include "GE_GlobalDefines.h"
 #include "GE_Logger.h"

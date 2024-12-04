@@ -5,7 +5,7 @@
 GE_Application::GE_Application(const std::string& anApplicationName, const std::vector<std::string>& someArguments)
 	: myApplicationName(anApplicationName)
 	, myArguments(someArguments)
-	, myD2DApplication(anApplicationName, anApplicationName, std::array<int, 2> { 640, 480 })
+	, myD2DApplication(anApplicationName, anApplicationName, Core_Vector2i(640, 480))
 {
 }
 

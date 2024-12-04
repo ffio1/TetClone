@@ -9,8 +9,11 @@ std::size_t D2D_Application::D2D_Application::ColorBrushPairHash::operator()(con
 	int b = static_cast<int>(std::ceil(aColor.b * 255));
 	int a = static_cast<int>(std::ceil(aColor.a * 255));
 
-	return ((r & 0xff) << 24) + ((g & 0xff) << 16) + ((b & 0xff) << 8)
-		+ (a & 0xff);
+	std::size_t rBS = static_cast<std::size_t>(r & 0xff) << 24;
+	std::size_t gBS = static_cast<std::size_t>(g & 0xff) << 16;
+	std::size_t bBS = static_cast<std::size_t>(b & 0xff) << 8;
+	std::size_t aBS = static_cast<std::size_t>(a & 0xff);
+	return rBS + gBS + bBS + aBS;
 }
 
 //--------------------------------------------------------------------------------
@@ -23,7 +26,7 @@ bool D2D_Application::D2D_Application::ColorBrushPairEqual::operator()(const D2D
 }
 
 //--------------------------------------------------------------------------------
-D2D_Application::D2D_Application(const std::string& anApplicationName, const std::string& aWindowDescription, const std::array<int, 2>& aWindowSize)
+D2D_Application::D2D_Application(const std::string& anApplicationName, const std::string& aWindowDescription, const Core_Vector2i& aWindowSize)
 	: myApplicationName(anApplicationName)
 	, myWindowDescription(aWindowDescription)
 	, myWindowSize(aWindowSize)
@@ -93,8 +96,8 @@ HRESULT D2D_Application::Initialize()
 	}
 
 	float dpi = static_cast<float>(GetDpiForWindow(myHwnd));
-	int windowX = static_cast<int>(std::ceil(myWindowSize[0] * dpi / 96.f));
-	int windowY = static_cast<int>(std::ceil(myWindowSize[1] * dpi / 96.f));
+	int windowX = static_cast<int>(std::ceil(myWindowSize.x * dpi / 96.f));
+	int windowY = static_cast<int>(std::ceil(myWindowSize.y * dpi / 96.f));
 	SetWindowPos(myHwnd, NULL, NULL, NULL, windowX, windowY, SWP_NOMOVE);
 	ShowWindow(myHwnd, SW_SHOWNORMAL);
 	UpdateWindow(myHwnd);
@@ -289,40 +292,35 @@ LRESULT __stdcall D2D_Application::WndProc(HWND aHwnd, UINT aMessage, WPARAM aWP
 		{
 			switch (aMessage)
 			{
+
 			case WM_SIZE:
 			{
 				UINT width = LOWORD(anLParam);
 				UINT height = HIWORD(anLParam);
 				application->OnResize(width, height);
+				result = 0;
+				wasHandled = true;
+				break;
 			}
-			result = 0;
-			wasHandled = true;
-			break;
 
 			case WM_DISPLAYCHANGE:
-			{
 				InvalidateRect(aHwnd, NULL, FALSE);
-			}
-			result = 0;
-			wasHandled = true;
-			break;
+				result = 0;
+				wasHandled = true;
+				break;
 
 			case WM_PAINT:
-			{
 				application->OnRender();
 				ValidateRect(aHwnd, NULL);
-			}
-			result = 0;
-			wasHandled = true;
-			break;
+				result = 0;
+				wasHandled = true;
+				break;
 
 			case WM_DESTROY:
-			{
 				PostQuitMessage(0);
-			}
-			result = 1;
-			wasHandled = true;
-			break;
+				result = 1;
+				wasHandled = true;
+				break;
 			}
 		}
 

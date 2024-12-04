@@ -7,6 +7,10 @@
 #include <string>
 #include <vector>
 
+// Lower-level libraries
+#include "Core_Math.h"
+#include "Core_Vector.h"
+
 // GE Utils
 #include "GE_GlobalDefines.h"
 #include "GE_SimpleSingleton.h"
